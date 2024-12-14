@@ -1,0 +1,43 @@
+cmake_minimum_required(VERSION 3.8.2)
+project(service_0)
+
+# Set C++ standard
+# set(CMAKE_CXX_STANDARD 11)
+# set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(OpenDDS REQUIRED)
+set(CMAKE_CXX_COMPILER ${OPENDDS_COMPILER})
+
+set(opendds_libs
+  OpenDDS::Dcps
+  OpenDDS::InfoRepoDiscovery
+  OpenDDS::Tcp
+  OpenDDS::Rtps
+  OpenDDS::Rtps_Udp
+)
+
+
+include_directories (
+  ${DDS_ROOT}/
+  # ${DDS_ROOT}/tools/modeling/codegen
+  # /Users/nghungthinh/Desktop/framework-embedded/opendds/opendds_if
+)
+  
+add_library(service_0_lib)
+opendds_target_sources(service_0_lib ${CMAKE_CURRENT_SOURCE_DIR}/../../opendds_if/config/idl/Messenger.idl)
+target_link_libraries(service_0_lib PUBLIC OpenDDS::Dcps)
+
+# Add executable
+add_executable(service_0 
+                main.cpp
+                # /Users/nghungthinh/Desktop/framework-embedded/opendds/opendds_if/opendds_if.cpp
+                ${DDS_ROOT}/tools/modeling/codegen/model/Sync.cpp
+                ${DDS_ROOT}/tools/modeling/codegen/model/NullReaderListener.cpp
+                # /Users/nghungthinh/Desktop/framework-embedded/opendds/opendds_if/DataReaderListenerImpl.cpp
+                /Users/nghungthinh/Desktop/framework-embedded/opendds/opendds_if/Boilerplate.cpp
+)
+
+target_link_libraries(service_0
+  service_0_lib
+  ${opendds_libs}
+)

@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.8.2)
+project(service_1)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(OpenDDS REQUIRED)
+
+# # # IDL TypeSupport Library
+# add_library(service_1_lib)
+# opendds_target_sources(service_1_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../opendds_if/config/idl/Message.idl)
+# target_link_libraries(service_1_lib PUBLIC OpenDDS::Dcps)
+
+# Add executable
+add_executable(service_1 main.cpp)
+
+# target_link_libraries(service_1
+#     PRIVATE
+#     messenger_idl
+#     OpenDDS::Dcps
+# )
